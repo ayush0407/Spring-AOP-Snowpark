@@ -15,13 +15,13 @@ public class SnowService extends SnowSession {
         snowUtil = new SnowUtil();
     }
 
-    public long fetchStreamData() {
+    public long fetchStreamData() throws URISyntaxException {
         try {
             if (snowUtil.checkIfStreamIsEmpty()) {
                 System.out.println("The stream is empty exiting the method.");
                 return 0L;
             } else {
-                DataFrame df = session.table("bank_stream");
+                DataFrame df = SnowSession.getSession().table("bank_stream");
                 System.out.println(df.count());
                 return df.count();
             }

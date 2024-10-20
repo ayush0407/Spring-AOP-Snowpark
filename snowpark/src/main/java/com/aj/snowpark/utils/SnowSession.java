@@ -7,20 +7,21 @@ import java.net.URISyntaxException;
 
 public class SnowSession {
 
-    protected Session session;
+    private static Session session;
 
-    public SnowSession() throws URISyntaxException {
-        this.setSession();
+    public static synchronized Session getSession() throws URISyntaxException {
+        if (session == null) {
+            setSession();
+        }
+        return session;
     }
 
-    public void setSession() throws URISyntaxException {
+    private static void setSession() throws URISyntaxException {
         session = Session.builder()
                 .configFile(SnowSession.class.getResource("/application.properties").toURI().getPath())
                 .create();
     }
 
-    public Session getSession() {
-        return session;
-    }
 }
+
 
